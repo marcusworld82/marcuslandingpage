@@ -93,6 +93,23 @@ ul, ol {
   mix-blend-mode: overlay;
 }
 
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 480px;
+  height: 480px;
+  margin-left: -240px;
+  margin-top: -240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(213, 0, 0, 0.10) 0%, rgba(213, 0, 0, 0.03) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
 /* ==========================================================================
    TYPOGRAPHY HELPERS
    ========================================================================== */
@@ -352,6 +369,21 @@ ul, ol {
   overflow: hidden;
 }
 
+.hero-mesh {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.hero-mesh svg {
+  width: 100%;
+  height: 100%;
+}
+
 .hero-glow {
   position: absolute;
   top: 50%;
@@ -440,11 +472,39 @@ section {
   border: 1px solid var(--color-surface-border);
   border-left: 3px solid var(--color-primary);
   padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
   transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.pain-card::after,
+.service-card::after,
+.who-card::after,
+.proof-card::after {
+  content: '';
+  position: absolute;
+  top: var(--glare-y, 50%);
+  left: var(--glare-x, 50%);
+  width: 220px;
+  height: 220px;
+  margin-left: -110px;
+  margin-top: -110px;
+  background: radial-gradient(circle, rgba(213, 0, 0, 0.10) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  pointer-events: none;
+}
+
+.pain-card:hover::after,
+.service-card:hover::after,
+.who-card:hover::after,
+.proof-card:hover::after {
+  opacity: 1;
 }
 
 .pain-card:hover {
-  transform: translateY(-6px);
   border-color: var(--color-primary);
 }
 
@@ -479,12 +539,21 @@ section {
   width: 100%;
   aspect-ratio: 4 / 5;
   background-color: var(--color-surface);
+  background-image: linear-gradient(160deg, #141414 0%, #0a0a0a 60%, #000000 100%);
   border: 1px solid var(--color-primary);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   position: relative;
   overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.portrait-frame:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(213, 0, 0, 0.2);
 }
 
 .portrait-frame::before {
@@ -494,11 +563,54 @@ section {
   background: radial-gradient(circle at center, rgba(213, 0, 0, 0.12) 0%, transparent 70%);
 }
 
+.portrait-glyph {
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  animation: portraitSpin 60s linear infinite;
+}
+
+.portrait-corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: var(--color-primary);
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.portrait-corner-tl {
+  top: 16px;
+  left: 16px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.portrait-corner-br {
+  bottom: 16px;
+  right: 16px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
 .portrait-label {
   font-family: var(--font-display);
   color: var(--color-white);
   font-size: 18px;
   letter-spacing: 0.06em;
+  position: relative;
+  z-index: 1;
+}
+
+.portrait-sub {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
   position: relative;
   z-index: 1;
 }
@@ -565,11 +677,14 @@ section {
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
+  position: relative;
+  overflow: hidden;
   transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .service-card:hover {
-  transform: translateY(-6px);
   border-color: var(--color-primary);
   box-shadow: 0 12px 32px rgba(213, 0, 0, 0.15);
 }
@@ -644,11 +759,14 @@ section {
   background-color: var(--color-surface);
   border: 1px solid var(--color-surface-border);
   padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
   transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .who-card:hover {
-  transform: translateY(-6px);
   border-color: var(--color-primary);
 }
 
@@ -673,11 +791,14 @@ section {
   background-color: var(--color-surface);
   border: 1px solid var(--color-surface-border);
   padding: var(--space-4);
+  position: relative;
+  overflow: hidden;
   transition: transform var(--transition-fast), border-color var(--transition-fast);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .proof-card:hover {
-  transform: translateY(-6px);
   border-color: var(--color-primary);
 }
 
