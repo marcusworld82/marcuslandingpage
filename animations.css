@@ -1,0 +1,174 @@
+/* ==========================================================================
+   EMPOSSIBLE -- animations.css
+   Keyframes, background animation, and AOS supplemental styles
+   ========================================================================== */
+
+/* ==========================================================================
+   HERO BREATHING GLOW
+   ========================================================================== */
+
+@keyframes heroBreathe {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -52%) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+}
+
+/* ==========================================================================
+   FINAL CTA GLOW DRIFT
+   ========================================================================== */
+
+@keyframes ctaGlowDrift {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(20px);
+  }
+}
+
+.final-cta-glow {
+  animation: ctaGlowDrift 10s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   TYPEWRITER CARET
+   ========================================================================== */
+
+.headline-line.typing::after {
+  content: '|';
+  display: inline-block;
+  color: var(--color-primary);
+  animation: caretBlink 0.8s steps(1) infinite;
+  margin-left: 4px;
+}
+
+@keyframes caretBlink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   FADE / SLIDE ENTRANCE KEYFRAMES (used as fallback to AOS where needed)
+   ========================================================================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-up-fallback {
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+.fade-in-fallback {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* ==========================================================================
+   NAV LOGO SUBTLE PULSE ON LOAD
+   ========================================================================== */
+
+@keyframes logoSettle {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-logo {
+  animation: logoSettle 0.6s ease-out;
+}
+
+/* ==========================================================================
+   ACCORDION ICON ROTATE (supplemental, primary logic inline in styles.css)
+   ========================================================================== */
+
+.faq-icon {
+  transition: transform var(--transition-fast);
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-glow,
+  .final-cta-glow,
+  .nav-logo {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
