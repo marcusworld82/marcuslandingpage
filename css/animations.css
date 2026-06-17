@@ -4,6 +4,71 @@
    ========================================================================== */
 
 /* ==========================================================================
+   HERO MESH PARTICLES
+   ========================================================================== */
+
+.mesh-blob-1 {
+  animation: blobDrift1 14s ease-in-out infinite;
+}
+
+.mesh-blob-2 {
+  animation: blobDrift2 18s ease-in-out infinite;
+}
+
+.mesh-blob-3 {
+  animation: blobDrift3 16s ease-in-out infinite;
+}
+
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, 20px); }
+}
+
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-25px, -30px); }
+}
+
+@keyframes blobDrift3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-15px, 25px); }
+}
+
+.particle {
+  opacity: 0.5;
+  animation: particleFloat 6s ease-in-out infinite;
+}
+
+.particle.p1 { animation-delay: 0s; }
+.particle.p2 { animation-delay: 0.8s; }
+.particle.p3 { animation-delay: 1.6s; }
+.particle.p4 { animation-delay: 2.4s; }
+.particle.p5 { animation-delay: 3.2s; }
+.particle.p6 { animation-delay: 4s; }
+.particle.p7 { animation-delay: 4.8s; }
+.particle.p8 { animation-delay: 5.6s; }
+
+@keyframes particleFloat {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-16px);
+  }
+}
+
+@keyframes portraitSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* ==========================================================================
    HERO BREATHING GLOW
    ========================================================================== */
 
@@ -159,8 +224,17 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-glow,
   .final-cta-glow,
-  .nav-logo {
+  .nav-logo,
+  .mesh-blob-1,
+  .mesh-blob-2,
+  .mesh-blob-3,
+  .particle,
+  .portrait-glyph {
     animation: none !important;
+  }
+
+  .cursor-glow {
+    display: none !important;
   }
 
   html {
@@ -170,5 +244,11 @@
   * {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
+  }
+}
+
+@media (hover: none) {
+  .cursor-glow {
+    display: none;
   }
 }
