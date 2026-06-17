@@ -1,6 +1,7 @@
 /* ==========================================================================
    EMPOSSIBLE -- main.js
-   Nav scroll state, mobile menu, smooth scroll, FAQ accordion, AOS init
+   Nav scroll state, mobile menu, smooth scroll, FAQ accordion, AOS init,
+   mouse tracking cursor glow, magnetic card tilt
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -115,5 +116,72 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+  /* ----------------------------------------------------------------------
+     MOUSE TRACKING CURSOR GLOW
+     A soft red glow that follows the pointer across the page.
+     Disabled on touch devices since there is no pointer to track.
+     ---------------------------------------------------------------------- */
+  var cursorGlow = document.getElementById('cursorGlow');
+  var isTouchDevice = window.matchMedia('(hover: none)').matches;
+
+  if (cursorGlow && !isTouchDevice) {
+    var glowX = 0;
+    var glowY = 0;
+    var targetX = 0;
+    var targetY = 0;
+    var glowActive = false;
+
+    window.addEventListener('mousemove', function (e) {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (!glowActive) {
+        glowActive = true;
+        cursorGlow.style.opacity = '1';
+      }
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', function () {
+      cursorGlow.style.opacity = '0';
+    });
+
+    function animateGlow() {
+      glowX += (targetX - glowX) * 0.12;
+      glowY += (targetY - glowY) * 0.12;
+      cursorGlow.style.transform = 'translate(' + glowX + 'px, ' + glowY + 'px)';
+      requestAnimationFrame(animateGlow);
+    }
+
+    animateGlow();
+  }
+
+  /* ----------------------------------------------------------------------
+     MAGNETIC TILT ON CARDS
+     Subtle tilt that follows pointer position within each card.
+     Skipped on touch devices.
+     ---------------------------------------------------------------------- */
+  if (!isTouchDevice) {
+    var tiltCards = document.querySelectorAll('.service-card, .pain-card, .who-card, .proof-card');
+
+    tiltCards.forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width;
+        var py = (e.clientY - rect.top) / rect.height;
+        var tiltX = (py - 0.5) * -6;
+        var tiltY = (px - 0.5) * 6;
+        card.style.transform = 'translateY(-6px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)';
+
+        var glareX = px * 100;
+        var glareY = py * 100;
+        card.style.setProperty('--glare-x', glareX + '%');
+        card.style.setProperty('--glare-y', glareY + '%');
+      });
+
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+      });
+    });
+  }
 
 });
